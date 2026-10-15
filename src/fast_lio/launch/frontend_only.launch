@@ -1,0 +1,15 @@
+<launch>
+  <arg name="platform" default="car" />
+  <arg name="output_dir" />
+  <param name="use_sim_time" value="false" />
+  <group if="$(eval arg('platform') == 'car')">
+    <rosparam command="load" file="$(find fast_lio)/config/hesai/car_hesai32.yaml" />
+    <node pkg="fast_lio" type="imu_si_relay.py" name="imu_si_relay" output="screen" />
+  </group>
+  <group if="$(eval arg('platform') == 'dog')">
+    <rosparam command="load" file="$(find fast_lio)/config/hesai/dog_hesai16.yaml" />
+  </group>
+  <param name="SaveDir" value="$(arg output_dir)" />
+  <param name="frontend_feedback_en" value="false" />
+  <node pkg="fast_lio" type="fastlio_node" name="laserMapping" required="true" output="screen" />
+</launch>

@@ -1,0 +1,54 @@
+diff --git a/gtsam/nonlinear/ISAM2.cpp b/gtsam/nonlinear/ISAM2.cpp
+index f56b237..0a560f8 100644
+--- a/gtsam/nonlinear/ISAM2.cpp
++++ b/gtsam/nonlinear/ISAM2.cpp
+@@ -28,11 +28,24 @@
+ #include <algorithm>
+ #include <map>
+ #include <utility>
++#include <stdexcept>
+ 
+ using namespace std;
+ 
+ namespace gtsam {
+ 
++void ISAM2::backup() {
++  ltaom_snapshot_.reset();
++  ltaom_snapshot_.reset(new ISAM2(*this));
++}
++
++void ISAM2::recover() {
++  if (!ltaom_snapshot_) throw std::logic_error("ISAM2::recover without backup");
++  const boost::shared_ptr<ISAM2> snapshot = ltaom_snapshot_;
++  *this = *snapshot;
++  ltaom_snapshot_ = snapshot;
++}
++
+ // Instantiate base class
+ template class BayesTree<ISAM2Clique>;
+ 
+diff --git a/gtsam/nonlinear/ISAM2.h b/gtsam/nonlinear/ISAM2.h
+index 9f33e75..0eaf64e 100644
+--- a/gtsam/nonlinear/ISAM2.h
++++ b/gtsam/nonlinear/ISAM2.h
+@@ -96,6 +96,10 @@ class GTSAM_EXPORT ISAM2 : public BayesTree<ISAM2Clique> {
+   int update_count_;  ///< Counter incremented every update(), used to determine
+                       ///< periodic relinearization
+ 
++  // LTAOM: complete snapshot, including the deep-copied Bayes tree.
++  // Factors are treated as immutable, as in normal ISAM2 updates.
++  boost::shared_ptr<ISAM2> ltaom_snapshot_;
++
+  public:
+   using This = ISAM2;                       ///< This class
+   using Base = BayesTree<ISAM2Clique>;      ///< The BayesTree base class
+@@ -110,6 +114,9 @@ class GTSAM_EXPORT ISAM2 : public BayesTree<ISAM2Clique> {
+    * ISAM2Params) */
+   ISAM2();
+ 
++  void backup();
++  void recover();
++
+   /** default virtual destructor */
+   virtual ~ISAM2() {}
+ 

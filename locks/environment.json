@@ -1,0 +1,12 @@
+{
+  "branch": "ros1",
+  "os": "Ubuntu 20.04",
+  "ros": "Noetic",
+  "compiler": "GCC 9.4",
+  "pcl": "1.10",
+  "frontend_eigen": "3.4.0 (vendored)",
+  "system_eigen": "3.3.7 (other prebuilt components)",
+  "gtsam": "4.0.3 + patches/gtsam.patch",
+  "ceres": "1.14.0 + patches/ceres.patch",
+  "build_jobs": 1
+}

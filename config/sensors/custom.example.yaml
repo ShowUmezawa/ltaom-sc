@@ -1,0 +1,20 @@
+# Paths are relative to this profile file. Copy and edit before running.
+schema: 1
+name: my_sensor
+topics:
+  lidar: /lidar/points
+  imu: /imu/data
+  # imu_output: /imu/converted  # Optional only when unit conversion is needed.
+imu_units:
+  acceleration: m/s2  # m/s2 or g; must include gravity
+  angular_velocity: rad/s  # rad/s or deg/s
+frontend: frontend.yaml
+# Required for full pipeline; optional for frontend-only use.
+# Copy/tune these files for your scene. They are starting points, not calibration.
+std: ../../src/STD/config/config_velo_mulran.yaml
+geometry: ../../src/loop_pipeline/config/dog_geometry.json
+retrieval:
+  gap: 50
+  seconds: 30.0
+  top_k: 10
+  sc_threshold: 0.13

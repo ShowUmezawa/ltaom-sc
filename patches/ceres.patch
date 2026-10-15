@@ -1,0 +1,14 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 02c72b5..e990d10 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -55,8 +55,7 @@ list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
+ include(UpdateCacheVariable)
+ 
+ # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
+-include(AddGerritCommitHook)
+-add_gerrit_commit_hook(${Ceres_SOURCE_DIR} ${Ceres_BINARY_DIR})
++# LTAOM reproducible build: do not download/install developer Git hooks.
+ 
+ # On OS X, add the Homebrew prefix to the set of prefixes searched by
+ # CMake in find_path & find_library.  This should ensure that we can

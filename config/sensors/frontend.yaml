@@ -1,0 +1,33 @@
+# Template: set calibrated LiDAR-to-IMU extrinsics before use.
+# Noise and filtering values are starting points, not sensor calibration.
+common:
+  lid_topic: /lidar/points
+  imu_topic: /imu/data
+  time_offset_lidar_to_imu: 0.0
+  time_offset_from_lidar: 0.0
+preprocess:
+  scan_line: 16
+  blind: 0.5
+  lidar_type: 6
+  max_scan_duration_s: 0.2
+  header_time_tolerance_s: 0.002
+mapping:
+  acc_cov: 0.1
+  gyr_cov: 0.1
+  b_acc_cov: 0.0001
+  b_gyr_cov: 0.0001
+  fov_degree: 180
+  det_range: 100.0
+  extrinsic_est_en: false
+  extrinsic_T: null
+  extrinsic_R: null
+feature_extract_enable: false
+point_filter_num: 3
+max_iteration: 5
+filter_size_surf: 0.2
+filter_size_map: 0.2
+cube_side_length: 1000
+dense_map_enable: true
+multisession_mode: 0
+frontend_feedback_en: false
+ikdtree_rebuild_mode: sync

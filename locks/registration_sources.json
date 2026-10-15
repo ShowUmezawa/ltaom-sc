@@ -1,0 +1,66 @@
+{
+  "sc-qn": {
+    "commit": "2ab179a3ec7254783553dd1b263a6cd6e819b8dc",
+    "url": "https://github.com/engcang/FAST-LIO-SAM-SC-QN.git",
+    "license_files": {
+      "LICENSE": "984473db34551b6aac1cb42397d043a2610d0dc0eff534fd195643e925156f72",
+      "README.md": "8bd92c00c4a6be9591dd630e28d0cd820d7f19e3cc3bf0e3ac5bf15297fea65a"
+    }
+  },
+  "quatro": {
+    "commit": "d27109bd6a1798e9cf2e0c2a4daac6af16e7bc23",
+    "url": "https://github.com/engcang/Quatro.git",
+    "license_files": {
+      "License": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "README.md": "103cc9f6d0158fb61412159084900d6d91e40a931eed5e9fd00337345668c519"
+    }
+  },
+  "nano_gicp": {
+    "commit": "b21e79edcceb7c6e86ec0dfec90f451b796b683a",
+    "url": "https://github.com/engcang/nano_gicp.git",
+    "license_files": {
+      "LICENSE": "4e82d6e312a2562491b7e8ad61b540ae3cfa00e3ff43cdb472e036c6c80ac5cc",
+      "README.md": "71141956afbe53721da700a21e798b479a651eac7f5fa09f606b3b6b8dab9c17"
+    }
+  },
+  "teaserpp": {
+    "commit": "e415c0d9713793bbe96908ff032748f100e2b1e3",
+    "url": "https://github.com/MIT-SPARK/TEASER-plusplus.git",
+    "license_files": {
+      "LICENSE": "9dafbe054461317e4d43e8688a2d19651ffb906ba898901588c9b4c997a238cc",
+      "README.md": "ee289ab1f089a6b669f46ff474551d8401d1cbce5ba563a1667eb409b8f025f2"
+    }
+  },
+  "pmc": {
+    "commit": "a2dfd612a501bca83c47206255dbbff619481f97",
+    "url": "https://github.com/jingnanshi/pmc.git",
+    "license_files": {
+      "LICENSE.md": "6f32f289bec7c745d611fa268feb0f941d9eca255f8e60032df423573992df87",
+      "README.md": "2ea8ba3a3b3ee1859a18662b56dcd1c186cfbe05712f52f2660ee6c945c59657"
+    }
+  },
+  "tinyply": {
+    "commit": "c9bb690dfe5e9105961e9e28120c48c9ae084bc6",
+    "url": "https://github.com/ddiakopoulos/tinyply.git",
+    "license_files": {
+      "README.md": "80d3fb1a0b5b289063d4e66c60ac404cf422a69863609168d656bc93e186a3d4"
+    }
+  },
+  "spectra": {
+    "commit": "5c4fb1de050847988faaaaa50f60e7d3d5f16143",
+    "url": "https://github.com/jingnanshi/spectra.git",
+    "license_files": {
+      "LICENSE": "2684de17300e0a434686f1ec7f8af6045207a4b457a3fe04b2b9ce655e7c5d50",
+      "README.md": "fe7738acee359ddaac97e17c76e03bd0b663fe35eb6fc8b136bad10345224c60"
+    }
+  },
+  "build_scope": "SC-QN reference only; Quatro/Nano sources and TEASER registration+graph with PMC; no upstream algorithm modifications; tinyply/spectra not linked (I/O/certification unused)",
+  "license_notes": {
+    "quatro": "README CC-BY-NC-SA-4.0; License file GPL-3.0; both preserved, ambiguity unresolved",
+    "nano_gicp": "MIT top-level; embedded fast_gicp parts BSD-3-Clause; notices preserved",
+    "teaserpp": "MIT",
+    "pmc": "GPL-3.0-or-later",
+    "sc-qn": "reference only, README CC-BY-NC-SA-4.0"
+  },
+  "compatibility": "teaser_compat.hpp imports std::vector for TEASER e415c0d graph.cc against newer PMC; no solver algorithm edits"
+}

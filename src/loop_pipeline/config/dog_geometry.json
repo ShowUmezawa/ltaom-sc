@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "validator_version": "d2-v1",
+  "voxel_m": 0.2,
+  "min_points": 150,
+  "max_correspondence_m": 2.0,
+  "inlier_distance_m": 0.5,
+  "min_overlap": 0.25,
+  "max_inlier_rmse_m": 0.3,
+  "max_point_plane_rmse_m": 0.15,
+  "min_spatial_extent_m": 3.0,
+  "min_normalized_hessian_ratio": 1e-05,
+  "max_initial_translation_change_m": 5.0,
+  "max_initial_rotation_change_rad": 0.52,
+  "rotation_sigma_rad": 0.02,
+  "translation_sigma_m": 0.15,
+  "allow_assumed_gravity": false,
+  "gravity_scope": "dog: reject SC geometry until gravity validity is independently established",
+  "threads": 2
+}
