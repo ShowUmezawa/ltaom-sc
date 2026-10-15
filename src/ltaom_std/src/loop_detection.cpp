@@ -72,7 +72,15 @@ std::map<uint64_t, nav_msgs::Odometry::ConstSharedPtr> odom_buf;
 size_t odom_limit=1024,odom_peak=0,active_submap_limit=256LL*1024*1024,active_submap_bytes=0;
 
 geometry_msgs::Pose current_pose;
-geometry_msgs::Pose last_pose;
+// Use the same valid origin reference on both ROS versions. ROS1 defaults
+// Quaternion to all zeros, which suppresses rotation-only motion at startup.
+geometry_msgs::Pose last_pose = [] {
+  geometry_msgs::Pose pose;
+  pose.position.x = pose.position.y = pose.position.z = 0.0;
+  pose.orientation.x = pose.orientation.y = pose.orientation.z = 0.0;
+  pose.orientation.w = 1.0;
+  return pose;
+}();
 double position_threshold = 0.2;
 double rotation_threshold = DEG2RAD(5);
 bool is_sub_msg = false;
