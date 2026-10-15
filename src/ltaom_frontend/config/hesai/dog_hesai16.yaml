@@ -1,0 +1,46 @@
+# Dataset-specific Hesai preset; calibrate extrinsics and time offsets for your sensors.
+common:
+  lid_topic: /hesai/pandar
+  imu_topic: /imu/body
+  time_offset_lidar_to_imu: 0.0
+  time_offset_from_lidar: 0.0
+preprocess:
+  scan_line: 16
+  blind: 0.5
+  lidar_type: 6
+  max_scan_duration_s: 0.2
+  header_time_tolerance_s: 0.002
+mapping:
+  acc_cov: 0.1
+  gyr_cov: 0.1
+  b_acc_cov: 0.0001
+  b_gyr_cov: 0.0001
+  fov_degree: 180
+  det_range: 100.0
+  extrinsic_est_en: false
+  extrinsic_T:
+  - 0.171
+  - 0.0
+  - 0.0908
+  extrinsic_R:
+  - 0.0
+  - -1.0
+  - 0.0
+  - 1.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 1.0
+feature_extract_enable: false
+point_filter_num: 3
+max_iteration: 5
+filter_size_surf: 0.2
+filter_size_map: 0.2
+cube_side_length: 1000
+dense_map_enable: true
+multisession_mode: 0
+frontend_feedback_en: false
+
+# Reproducible reference mode.
+ikdtree_rebuild_mode: sync

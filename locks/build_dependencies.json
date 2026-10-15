@@ -1,0 +1,12 @@
+{
+  "gtsam": {
+    "url": "https://github.com/borglab/gtsam.git",
+    "commit": "6425000775da29c93719f37dce3f2de38a0064ec",
+    "patch": "patches/gtsam.patch"
+  },
+  "ceres": {
+    "url": "https://github.com/ceres-solver/ceres-solver.git",
+    "commit": "facb199f3eda902360f9e1d5271372b7e54febe1",
+    "patch": "patches/ceres.patch"
+  }
+}

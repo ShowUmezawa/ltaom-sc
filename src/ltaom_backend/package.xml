@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<package format="3">
+ <name>ltaom_backend</name><version>0.1.0</version><description>Native LTAOM verified Pose3 backend and factor archive tools.</description>
+ <maintainer email="local@example.invalid">Workspace maintainers</maintainer><license>See LICENSE</license>
+ <buildtool_depend>ament_cmake</buildtool_depend><depend>ltaom_transport</depend><depend>pcl_conversions</depend><depend>libpcl-all-dev</depend><depend>gtsam</depend><depend>openssl</depend>
+ <export><build_type>ament_cmake</build_type></export>
+</package>

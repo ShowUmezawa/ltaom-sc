@@ -1,0 +1,119 @@
+--- a/cmake/FindTBB.cmake
++++ b/cmake/FindTBB.cmake
+@@ -184,7 +184,11 @@
+   ##################################
+ 
+   if(TBB_INCLUDE_DIRS)
+-    file(READ "${TBB_INCLUDE_DIRS}/tbb/tbb_stddef.h" _tbb_version_file)
++    if(EXISTS "${TBB_INCLUDE_DIRS}/tbb/tbb_stddef.h")
++      file(READ "${TBB_INCLUDE_DIRS}/tbb/tbb_stddef.h" _tbb_version_file)
++    else()
++      file(READ "${TBB_INCLUDE_DIRS}/oneapi/tbb/version.h" _tbb_version_file)
++    endif()
+     string(REGEX REPLACE ".*#define TBB_VERSION_MAJOR ([0-9]+).*" "\\1"
+         TBB_VERSION_MAJOR "${_tbb_version_file}")
+     string(REGEX REPLACE ".*#define TBB_VERSION_MINOR ([0-9]+).*" "\\1"
+--- a/gtsam/base/FastList.h
++++ b/gtsam/base/FastList.h
+@@ -22,6 +22,7 @@
+ #include <list>
+ #include <boost/utility/enable_if.hpp>
+ #include <boost/serialization/nvp.hpp>
++#include <boost/serialization/library_version_type.hpp>
+ #include <boost/serialization/list.hpp>
+ 
+ namespace gtsam {
+--- a/gtsam/base/serialization.h
++++ b/gtsam/base/serialization.h
+@@ -24,10 +24,12 @@
+ #include <string>
+ 
+ // includes for standard serialization types
++#include <boost/serialization/version.hpp>
+ #include <boost/serialization/optional.hpp>
+ #include <boost/serialization/shared_ptr.hpp>
+ #include <boost/serialization/vector.hpp>
+ #include <boost/serialization/map.hpp>
++#include <boost/serialization/library_version_type.hpp>
+ #include <boost/serialization/list.hpp>
+ #include <boost/serialization/deque.hpp>
+ #include <boost/serialization/weak_ptr.hpp>
+--- a/gtsam/linear/LossFunctions.h
++++ b/gtsam/linear/LossFunctions.h
+@@ -25,6 +25,7 @@
+ 
+ #include <boost/serialization/extended_type_info.hpp>
+ #include <boost/serialization/nvp.hpp>
++#include <boost/serialization/version.hpp>
+ #include <boost/serialization/optional.hpp>
+ #include <boost/serialization/shared_ptr.hpp>
+ #include <boost/serialization/singleton.hpp>
+--- a/gtsam/linear/NoiseModel.h
++++ b/gtsam/linear/NoiseModel.h
+@@ -27,6 +27,7 @@
+ #include <boost/serialization/extended_type_info.hpp>
+ #include <boost/serialization/singleton.hpp>
+ #include <boost/serialization/shared_ptr.hpp>
++#include <boost/serialization/version.hpp>
+ #include <boost/serialization/optional.hpp>
+ 
+ namespace gtsam {
+--- a/gtsam/nonlinear/ISAM2.cpp
++++ b/gtsam/nonlinear/ISAM2.cpp
+@@ -28,10 +28,23 @@
+ #include <algorithm>
+ #include <map>
+ #include <utility>
++#include <stdexcept>
+ 
+ using namespace std;
+ 
+ namespace gtsam {
++
++void ISAM2::backup() {
++  ltaom_snapshot_.reset();
++  ltaom_snapshot_.reset(new ISAM2(*this));
++}
++
++void ISAM2::recover() {
++  if (!ltaom_snapshot_) throw std::logic_error("ISAM2::recover without backup");
++  const boost::shared_ptr<ISAM2> snapshot = ltaom_snapshot_;
++  *this = *snapshot;
++  ltaom_snapshot_ = snapshot;
++}
+ 
+ // Instantiate base class
+ template class BayesTree<ISAM2Clique>;
+--- a/gtsam/nonlinear/ISAM2.h
++++ b/gtsam/nonlinear/ISAM2.h
+@@ -96,6 +96,10 @@
+   int update_count_;  ///< Counter incremented every update(), used to determine
+                       ///< periodic relinearization
+ 
++  // LTAOM: complete snapshot, including the deep-copied Bayes tree.
++  // Factors are treated as immutable, as in normal ISAM2 updates.
++  boost::shared_ptr<ISAM2> ltaom_snapshot_;
++
+  public:
+   using This = ISAM2;                       ///< This class
+   using Base = BayesTree<ISAM2Clique>;      ///< The BayesTree base class
+@@ -109,6 +113,9 @@
+   /** Create an empty ISAM2 instance using the default set of parameters (see
+    * ISAM2Params) */
+   ISAM2();
++
++  void backup();
++  void recover();
+ 
+   /** default virtual destructor */
+   virtual ~ISAM2() {}
+--- a/gtsam/slam/SmartFactorBase.h
++++ b/gtsam/slam/SmartFactorBase.h
+@@ -29,6 +29,7 @@
+ #include <gtsam/geometry/CameraSet.h>
+ 
+ #include <boost/optional.hpp>
++#include <boost/serialization/version.hpp>
+ #include <boost/serialization/optional.hpp>
+ #include <boost/make_shared.hpp>
+ #include <vector>

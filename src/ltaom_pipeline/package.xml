@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<package format="3">
+ <name>ltaom_pipeline</name><version>0.1.0</version><description>Ordered native rclpy submap and verified-loop pipeline.</description>
+ <maintainer email="local@example.invalid">Workspace maintainers</maintainer><license>See LICENSE and retained transformations.py notice</license>
+ <buildtool_depend>ament_python</buildtool_depend><exec_depend>rclpy</exec_depend><exec_depend>ltaom_interfaces</exec_depend><exec_depend>std_msgs</exec_depend><exec_depend>std_srvs</exec_depend><exec_depend>python3-numpy</exec_depend>
+ <export><build_type>ament_python</build_type></export>
+</package>

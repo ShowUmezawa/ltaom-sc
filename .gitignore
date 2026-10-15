@@ -1,0 +1,22 @@
+/build/
+/devel/
+/install/
+/log/
+/logs/
+/results/
+/cache/
+/deps_build/
+/deps_install/
+__pycache__/
+*.pyc
+*.bag
+*.db3
+*.mcap
+*.pcd
+*.ply
+*.bin
+*.core
+.env
+
+# Local experiment reports
+/reports/

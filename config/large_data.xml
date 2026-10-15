@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <transport_descriptors>
+    <transport_descriptor>
+      <transport_id>udp_discovery</transport_id>
+      <type>UDPv4</type>
+    </transport_descriptor>
+    <transport_descriptor>
+      <transport_id>large_submap_shm</transport_id>
+      <type>SHM</type>
+      <segment_size>536870912</segment_size>
+      <maxMessageSize>67108864</maxMessageSize>
+      <port_queue_capacity>512</port_queue_capacity>
+    </transport_descriptor>
+  </transport_descriptors>
+  <participant profile_name="large_submap_participant" is_default_profile="true">
+    <rtps>
+      <useBuiltinTransports>false</useBuiltinTransports>
+      <userTransports>
+        <transport_id>udp_discovery</transport_id>
+        <transport_id>large_submap_shm</transport_id>
+      </userTransports>
+    </rtps>
+  </participant>
+</profiles>

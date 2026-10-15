@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<package format="3">
+ <name>ltaom_frontend</name><version>0.1.0</version><description>LTAOM Hesai frontend native ROS 2 port.</description>
+ <maintainer email="local@example.invalid">Workspace maintainers</maintainer><license>BSD-3-Clause</license>
+ <buildtool_depend>ament_cmake</buildtool_depend>
+ <depend>rclcpp</depend><depend>sensor_msgs</depend><depend>nav_msgs</depend><depend>geometry_msgs</depend><depend>std_msgs</depend><depend>std_srvs</depend><depend>visualization_msgs</depend><depend>pcl_conversions</depend><depend>tf2</depend><depend>tf2_ros</depend><depend>ltaom_interfaces</depend><depend>ltaom_transport</depend>
+ <export><build_type>ament_cmake</build_type></export>
+</package>

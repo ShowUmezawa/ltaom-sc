@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<package format="3">
+ <name>ltaom_loop_core</name><version>0.1.0</version>
+ <description>Native build of frozen Scan Context and Quatro/Nano-GICP verification cores. Topic orchestration is separate.</description>
+ <maintainer email="local@example.invalid">Workspace maintainers</maintainer>
+ <license>See retained upstream source licenses</license>
+ <buildtool_depend>ament_cmake</buildtool_depend>
+ <depend>libpcl-all-dev</depend><depend>libopencv-dev</depend><depend>eigen</depend>
+ <export><build_type>ament_cmake</build_type></export>
+</package>

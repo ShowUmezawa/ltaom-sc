@@ -1,0 +1,13 @@
+{
+  "branch": "ros2",
+  "os": "Ubuntu 22.04",
+  "ros": "Humble",
+  "compiler": "GCC 11.2",
+  "pcl": "1.12.1",
+  "frontend_eigen": "3.4.0 (vendored)",
+  "system_eigen": "3.4.0",
+  "gtsam": "4.0.3 + patches/gtsam.patch",
+  "ceres": "1.14.0 + patches/ceres.patch",
+  "build_jobs": 1,
+  "shm_gib": 4
+}
