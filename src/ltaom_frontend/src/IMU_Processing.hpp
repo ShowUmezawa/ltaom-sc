@@ -74,6 +74,7 @@ class ImuProcess
   bool disable_undistort = false;
 
  private:
+  friend struct ImuProcessBiasRegression;
  #ifdef USE_IKFOM
   void IMU_init(const MeasureGroup &meas, esekfom::esekf<state_ikfom, 12, input_ikfom> &kf_state, int &N);
   void UndistortPcl(const MeasureGroup &meas, esekfom::esekf<state_ikfom, 12, input_ikfom> &kf_state, PointCloudXYZI &pcl_in_out);
@@ -328,10 +329,9 @@ void ImuProcess::UndistortPcl(const MeasureGroup &meas, esekfom::esekf<state_ikf
     fout_imu << setw(10) << ltaom_ros2::seconds(head->header.stamp) - first_lidar_time << " " << angvel_avr.transpose() << " " << acc_avr.transpose() << endl;
     // #endif 
 
-    angvel_avr -= imu_state.bg;
-    acc_avr = acc_avr - imu_state.ba;
-
-    acc_avr     = acc_avr * G_m_s2 / mean_acc.norm(); // - state_inout.ba;
+    // get_f() owns bias subtraction during prediction. Keep the measured
+    // angular velocity and gravity-normalized acceleration uncorrected here.
+    acc_avr = acc_avr * G_m_s2 / mean_acc.norm();
 
     if(ltaom_ros2::seconds(head->header.stamp) < last_lidar_end_time_)
     {
@@ -357,9 +357,10 @@ void ImuProcess::UndistortPcl(const MeasureGroup &meas, esekfom::esekf<state_ikf
     imu_state = kf_state.get_x();
     //std::cout << "in propogate glio cov = " << std::endl << kf_state.get_P().diagonal().transpose() << std::endl;
 
-    angvel_last = angvel_avr/* - imu_state.bg*/;
-    acc_s_last  = imu_state.rot * (acc_avr/* - imu_state.ba*/); // move baises substraction up to where
-                                                                // before imu prediction to make system more robust
+    // Independently prepare bias-corrected rates for point deskewing.
+    // These values are not fed back into predict().
+    angvel_last = angvel_avr - imu_state.bg;
+    acc_s_last = imu_state.rot * (acc_avr - imu_state.ba);
     for(int i=0; i<3; i++)
     {
       acc_s_last[i] += imu_state.grav[i];
@@ -427,7 +428,9 @@ void ImuProcess::UndistortPcl(const MeasureGroup &meas, esekfom::esekf<state_ikf
       it_pcl->y = P_compensate(1);
       it_pcl->z = P_compensate(2);
 
-      if (it_pcl == pcl_out.points.begin()) break;
+      // Every point is now compensated. Stop the outer IMU-segment loop too,
+      // otherwise a first point on a segment boundary can be transformed twice.
+      if (it_pcl == pcl_out.points.begin()) return;
     }
   }
 }
